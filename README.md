@@ -1,16 +1,21 @@
 # TopLoader88 Downloads
 
-Public, one-tap downloads for TopLoader88 apps. **No source code here** â€” only the
+Public, one-tap downloads for TopLoader88 apps. **No source code here** - only the
 installers/binaries. Each app''s source lives in its own repo.
 
-## Apps
+## PodWatch - live whale & orca tracking
 
-### PodWatch - live whale & orca tracking (Android)
-[**Download the latest APK**](https://github.com/TopLoader88/TopLoader88Downloads/releases/download/podwatch/PodWatch.apk)
+Track orcas and whales in near-real time from boat traffic + hydrophones, with
+predicted locations and viewing guidance.
 
-To install: open the APK on your Android phone, allow "Install unknown apps" when
-prompted, then install. (If an update refuses with a signature error, uninstall the
-old PodWatch first.)
+**Android**
+[Download the APK](https://github.com/TopLoader88/TopLoader88Downloads/releases/download/podwatch/PodWatch.apk)
+Open the file on your phone, allow "Install unknown apps" if prompted, then install.
+
+**Windows PC**
+[Download for Windows (.zip)](https://github.com/TopLoader88/TopLoader88Downloads/releases/download/podwatch/PodWatch-Windows.zip)
+Unzip anywhere, then run **PodWatch.exe**. (Windows SmartScreen may warn on a new
+unsigned app - click "More info" then "Run anyway".)
 
 ---
 
