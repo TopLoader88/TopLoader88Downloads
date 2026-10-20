@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="teleprompter-runtime" content="web">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Teleprompter">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Teleprompter Display</title>
+  <link rel="icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body class="display-page">
+  <div id="display-status" class="display-status" role="status">Connecting to local control...</div>
+  <section id="reader-shell" class="reader-shell" aria-label="Teleprompter display">
+    <div id="reader" class="reader" tabindex="0" aria-label="Script display"><div id="script-content" class="script-content"></div></div>
+    <div class="reading-guide" aria-hidden="true"></div>
+    <div class="reader-actions" role="group" aria-label="Display controls">
+      <button id="mirror" class="glass" aria-pressed="false" aria-keyshortcuts="M" disabled>Mirror</button>
+      <button id="fullscreen" class="glass" aria-pressed="false" aria-keyshortcuts="F">Fullscreen</button>
+      <button id="reset-display" class="glass" aria-keyshortcuts="Home" disabled>Back to start</button>
+    </div>
+  </section>
+  <p class="sr-only">M toggles mirrored text. F toggles fullscreen. Home goes back to the start and pauses. Escape exits fullscreen. Click a word to change position; following continues if already running. Settings are in the control window.</p>
+  <script type="module" src="./assets/display-DYAO5TTI.js"></script>
+</body>
+</html>

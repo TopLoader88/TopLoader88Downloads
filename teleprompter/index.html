@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="teleprompter-runtime" content="web">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Teleprompter">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111519">
+  <meta name="color-scheme" content="dark">
+  <title>Local Teleprompter</title>
+  <link rel="icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+  <a class="skip-link" href="#controls">Skip to controls</a>
+  <header class="app-header">
+    <div><h1>Local Teleprompter</h1><p>Your script. Your pace. No cloud required.</p></div>
+    <div class="header-actions"><span id="connection" class="badge">Connecting...</span><button id="read-device" class="primary" hidden>Read on this device</button><a id="device-edit" class="button secondary" href="#editor-panel" hidden>Edit script</a><a id="device-settings" class="button secondary" href="#settings-panel" hidden>Settings</a><a id="open-display" class="button secondary" href="./display.html" target="teleprompter-display">Open display</a></div>
+  </header>
+  <main id="controls" tabindex="-1">
+    <section id="offline-install" class="offline-install" aria-labelledby="offline-install-heading" hidden>
+      <h2 id="offline-install-heading">Install and use offline</h2>
+      <p id="offline-download-status" role="status">Checking saved offline files...</p>
+      <button id="save-offline" class="primary">Save for offline use</button>
+      <progress id="offline-download-progress" aria-label="Offline download" max="1" value="0" hidden></progress>
+      <details class="install-help"><summary>Install on a phone or Mac</summary>
+        <p>iPhone/iPad: open in Safari, tap Share, then Add to Home Screen. Android: use Chrome's Install app or Add to Home Screen. Mac: use Safari's File &gt; Add to Dock, or Chrome/Edge's Install app.</p>
+        <p>Open the installed app and save its offline files there if asked. Keep this app visible while reading; phones pause microphone capture when locked or backgrounded. A current Safari/iOS 17+ or Chrome is recommended.</p>
+        <p>Browser storage can be removed by the browser or device. If saved files disappear, reconnect and save them again. The Android APK includes them without this download step.</p>
+      </details>
+    </section>
+    <section class="toolbar" aria-label="Teleprompter controls">
+      <div class="modes" role="group" aria-label="Scrolling mode">
+        <button data-mode="voice" aria-pressed="true">Voice follow</button>
+        <button data-mode="timed" aria-pressed="false">Timed scroll</button>
+        <button data-mode="manual" aria-pressed="false">Manual</button>
+      </div>
+      <div class="transport">
+        <button id="start" class="primary">Start following</button>
+        <button id="pause" disabled>Pause</button>
+        <button id="reset" class="secondary">Back to start</button>
+      </div>
+      <label class="speed">Speed <input id="speed" type="range" min="40" max="400" step="5" value="140"><output id="speed-value">140 WPM</output></label>
+    </section>
+    <div class="microphone-controls">
+      <span id="microphone-heading">Microphone</span>
+      <details id="microphone-picker" class="microphone-picker">
+        <summary id="microphone-label" aria-describedby="microphone-hint">System default microphone</summary>
+        <fieldset id="microphone" aria-labelledby="microphone-heading">
+          <label><input type="radio" name="microphone" value="" checked> System default microphone</label>
+        </fieldset>
+      </details>
+      <button id="refresh-microphones" class="secondary">Allow / refresh microphones</button>
+    </div>
+    <p id="microphone-hint" class="hint">Select an input for offline voice follow. Allow access to see microphone names.</p>
+    <div class="status-row">
+      <span id="status" role="status" aria-live="polite">Ready. Start following, then read the highlighted word.</span>
+      <span id="progress">0 / 0 words</span>
+    </div>
+    <p id="error" class="error" role="alert" hidden></p>
+    <section id="reader-shell" class="reader-shell" aria-label="Script preview">
+      <div id="reader" class="reader" tabindex="0" aria-label="Script. Click or tap a word to change position; following continues if running.">
+        <div id="script-content" class="script-content"></div>
+      </div>
+      <div class="reading-guide" aria-hidden="true"></div>
+      <div id="device-information" class="device-information" hidden>
+        <span id="device-progress"></span><span id="device-status" role="status"></span>
+        <p id="device-error" class="error" role="alert" hidden></p>
+      </div>
+      <div id="device-actions" class="device-actions" role="group" aria-label="Reading controls" hidden>
+        <button id="device-controls">Controls</button><button id="device-play" class="primary">Start</button>
+        <button id="device-reset">Back to start</button><button id="device-mirror" aria-pressed="false">Mirror</button>
+        <button id="device-fullscreen">Fullscreen</button><span id="awake-status" class="hint"></span>
+      </div>
+    </section>
+    <div class="below-reader"><span id="heard">Recognized speech will appear here.</span><meter id="mic-level" min="0" max="0.15" value="0" aria-label="Microphone input level"></meter></div>
+    <p class="hint">Space: start / pause &middot; Esc: pause &middot; Arrows / wheel: scroll &middot; Home: restart<br>Click or tap a word to change position. Following continues if already running. Back to start resets and pauses.</p>
+    <div class="panels">
+      <details id="editor-panel">
+        <summary>Edit script <span id="word-count"></span></summary>
+        <label class="sr-only" for="script-input">Script text</label>
+        <textarea id="script-input" rows="9" spellcheck="false" maxlength="200000"></textarea>
+        <div class="row"><button id="apply-script" class="primary">Use this script</button><label class="button secondary" for="import-script">Import document</label><input id="import-script" type="file" accept=".txt,.md,.docx,.pdf,.rtf,.srt,.vtt" hidden></div>
+        <p id="import-status" class="hint" role="status">TXT, MD, Word DOCX, PDF, RTF, SRT and VTT. Paste from Word or Pages to keep supported fonts and emphasis. Up to 200,000 characters.</p>
+        <p class="hint">Scripts and formatting are saved in this browser. Editing stops the microphone. Original colors and page layout are not copied, to keep the script readable.</p>
+      </details>
+      <details id="settings-panel">
+        <summary>Settings &amp; offline readiness</summary>
+        <div class="settings">
+          <label for="engine">Speech engine</label>
+          <select id="engine"><option value="offline">Offline English (local Vosk)</option><option value="browser">Browser recognition (may use internet)</option></select>
+          <label for="language">Browser language</label>
+          <select id="language" disabled><option value="en-US">English (US)</option><option value="en-GB">English (UK)</option><option value="es-ES">Spanish</option><option value="fr-FR">French</option><option value="de-DE">German</option><option value="it-IT">Italian</option><option value="pt-BR">Portuguese</option><option value="ja-JP">Japanese</option></select>
+          <label for="font-size">Text size</label><input id="font-size" type="range" min="24" max="100" value="48">
+          <label for="theme">Background &amp; contrast</label>
+          <select id="theme"><option value="dark">Dark</option><option value="light">Light</option><option value="contrast">High contrast</option><option value="system">Match system</option></select>
+          <label for="line-spacing">Line spacing</label><div class="setting-range"><input id="line-spacing" type="range" min="1" max="2.5" step="0.05" value="1.65"><output id="line-spacing-value" for="line-spacing">1.65x</output></div>
+          <label for="column-width">Text-column width</label><div class="setting-range"><input id="column-width" type="range" min="50" max="100" step="5" value="80"><output id="column-width-value" for="column-width">80%</output></div>
+          <label for="reduced-motion">Reduce scrolling motion</label><input id="reduced-motion" type="checkbox">
+          <label id="keep-awake-label" for="keep-awake" hidden>Keep screen awake while reading</label><input id="keep-awake" type="checkbox" checked hidden>
+          <span id="font-heading">Display font</span>
+          <details id="font-picker" class="microphone-picker"><summary id="font-label">System default</summary><fieldset id="font-options" aria-labelledby="font-heading"></fieldset></details>
+          <label for="preserve-formatting">Keep imported fonts &amp; emphasis</label><input id="preserve-formatting" type="checkbox" checked>
+          <label for="highlight-word">Show word tracking</label><input id="highlight-word" type="checkbox" checked>
+          <label for="guide">Reading guide</label><input id="guide" type="checkbox" checked>
+        </div>
+        <p class="hint">Appearance settings apply to the preview and separate display. Mirror and Fullscreen are on the display only; the control page stays unmirrored. Reduced motion moves directly to the reading position and also respects your system preference. Timed mode still advances at the selected speed.</p>
+        <p class="hint">Turn off Show word tracking to hide word highlighting and read-word dimming. Voice following and scrolling keep working.</p>
+        <p class="hint">Fonts use your installed Windows/Mac fonts, with local fallbacks. No font downloads. Turn off imported formatting to use one display font throughout. PDF fonts and sizes are approximate; scanned PDFs need OCR first.</p>
+        <p id="offline-status" class="hint" role="status">Checking local files...</p>
+        <button id="check-offline" class="secondary">Check offline engine (no microphone)</button>
+        <p class="hint">Offline mode never sends audio out. The included small English model is free, but recognition accuracy depends on your microphone, accent, and surroundings. Browser recognition may send audio to its provider; it is never selected automatically.</p>
+        <p id="display-help" class="hint">vMix URL: <a id="display-url" href="./display.html" target="teleprompter-display"></a>. Keep this control window open. Both windows must use exactly the same address and port.</p>
+      </details>
+    </div>
+  </main>
+  <script type="module" src="./assets/app-ZFUZ2LSX.js"></script>
+</body>
+</html>

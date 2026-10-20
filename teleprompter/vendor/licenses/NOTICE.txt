@@ -1,0 +1,32 @@
+Local Teleprompter - third-party runtime components
+
+Vosk-browser 0.0.8 and Vosk/Kaldi WebAssembly speech recognition
+https://github.com/ccoreilly/vosk-browser
+https://github.com/alphacep/vosk-api
+Apache License 2.0. See Apache-2.0.txt and notices retained in the library.
+
+Vosk small US English model 0.15
+https://alphacephei.com/vosk/models
+https://ccoreilly.github.io/vosk-browser/models/vosk-model-small-en-us-0.15.tar.gz
+Apache License 2.0. The model is data, not a recording made by this app.
+
+PDF.js 6.4.299
+https://github.com/mozilla/pdf.js
+Apache License 2.0. Additional font, CMap and decoder licenses are included
+in their respective vendor/pdfjs folders.
+
+fflate
+https://github.com/101arrowz/fflate
+MIT License. See fflate-MIT.txt.
+
+UUID, included by Vosk-browser
+https://github.com/uuidjs/uuid
+MIT License. See uuid-MIT.txt.
+
+Capacitor and Capacitor App (Android package)
+https://github.com/ionic-team/capacitor
+https://github.com/ionic-team/capacitor-plugins
+MIT License. See Capacitor-MIT.txt.
+
+No proprietary font files are included. Display font choices use installed
+system fonts and local fallbacks.
