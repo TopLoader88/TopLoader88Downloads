@@ -49,8 +49,8 @@ save again if needed. Safari/iOS 17+ or current Chrome/Edge is recommended.
 
 **Android APK (experimental)**
 [Download the offline Android app (.apk)](https://github.com/TopLoader88/TopLoader88Downloads/releases/download/teleprompter-v1.1.0/LocalTeleprompter-1.1.0-Android.apk).
-**Experimental:** offline installation and model loading are checked, but the native
-speech-following test has not passed and real-phone microphone accuracy is unverified.
+**Experimental:** offline installation and model loading are checked, but native
+speech following, full interaction checks and real-phone microphone accuracy are not fully verified.
 The browser version above has passed offline reference-speech tests.
 The test-signed APK includes the English model and can run offline after a fresh
 installation, without a browser model-download step. Android's normal "Install
